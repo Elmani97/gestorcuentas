@@ -24,7 +24,7 @@ jobs:
 
       - name: Compilar APK
         run: |
-          flet build apk
+          flet build apk main_movil.py
 
       - name: Subir APK Terminado
         uses: actions/upload-artifact@v4
