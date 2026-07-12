@@ -1,0 +1,33 @@
+name: Compilar APK Android
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar Código
+        uses: actions/checkout@v4
+
+      - name: Extraer archivos
+        run: unzip -o app_source.zip
+
+      - name: Instalar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Instalar Librerías
+        run: |
+          pip install -r requirements.txt
+
+      - name: Compilar APK
+        run: |
+          flet build apk
+
+      - name: Subir APK Terminado
+        uses: actions/upload-artifact@v4
+        with:
+          name: GestorSuscripciones-APK
+          path: build/apk/*.apk
