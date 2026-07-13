@@ -39,7 +39,7 @@ jobs:
 
       - name: Compilar APK
         run: |
-          flet build apk --module-name main_movil -vv
+          flet build apk --module-name main_movil -vv --yes
         env:
           FLUTTER_SUPPRESS_ANALYTICS: "true"
 
@@ -49,3 +49,4 @@ jobs:
         with:
           name: GestorSuscripciones-APK
           path: build/apk/*.apk
+
