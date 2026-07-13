@@ -6,6 +6,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Descargar Código
         uses: actions/checkout@v4
@@ -24,6 +25,9 @@ jobs:
         with:
           channel: 'stable'
 
+      - name: Aceptar Licencias Android
+        run: yes | flutter doctor --android-licenses || true
+
       - name: Instalar Python
         uses: actions/setup-python@v5
         with:
@@ -35,10 +39,13 @@ jobs:
 
       - name: Compilar APK
         run: |
-          flet build apk --module-name main_movil
+          flet build apk --module-name main_movil -vv
+        env:
+          FLUTTER_SUPPRESS_ANALYTICS: "true"
 
       - name: Subir APK Terminado
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: GestorSuscripciones-APK
           path: build/apk/*.apk
